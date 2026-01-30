@@ -1,0 +1,61 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+vaultdb
+**/vaultdb
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+coverage.html
+coverage.txt
+
+# Dependency directories
+vendor/
+
+# Go workspace file
+go.work
+go.work.sum
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build artifacts
+bin/
+dist/
+build/
+
+# RocksDB data directories (uncomment if you don't want to commit data)
+# rocksdb/
+# **/rocksdb/
+
+# Raft data directories (uncomment if you don't want to commit cluster data)
+# node*/
+# **/node*/
+
+# Log files
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Environment files
+.env
+.env.local
+
+# Profiling data
+*.prof
+cpu.prof
+mem.prof
