@@ -34,12 +34,20 @@ clean: ## Clean build artifacts
 
 test: ## Run tests
 	@echo "Running tests..."
-	@go test -v ./...
+	@export CGO_CFLAGS="-I/opt/homebrew/include"; \
+	 export CGO_LDFLAGS="-L/opt/homebrew/lib -lrocksdb -lzstd -llz4 -lsnappy -lz -pthread"; \
+	 export PKG_CONFIG_PATH="/opt/homebrew/lib/pkgconfig:$$PKG_CONFIG_PATH"; \
+	 export DYLD_LIBRARY_PATH="/opt/homebrew/lib:$$DYLD_LIBRARY_PATH"; \
+	 go test -v ./...
 
 test-coverage: ## Run tests with coverage
 	@echo "Running tests with coverage..."
-	@go test -v -coverprofile=coverage.out ./...
-	@go tool cover -html=coverage.out -o coverage.html
+	@export CGO_CFLAGS="-I/opt/homebrew/include"; \
+	 export CGO_LDFLAGS="-L/opt/homebrew/lib -lrocksdb -lzstd -llz4 -lsnappy -lz -pthread"; \
+	 export PKG_CONFIG_PATH="/opt/homebrew/lib/pkgconfig:$$PKG_CONFIG_PATH"; \
+	 export DYLD_LIBRARY_PATH="/opt/homebrew/lib:$$DYLD_LIBRARY_PATH"; \
+	 go test -v -coverprofile=coverage.out ./...; \
+	 go tool cover -html=coverage.out -o coverage.html
 	@echo "Coverage report generated: coverage.html"
 
 install: ## Install dependencies

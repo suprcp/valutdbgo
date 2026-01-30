@@ -22,6 +22,7 @@ VaultDB is a high-performance distributed key-value storage system built in Go u
 
 VaultDB uses:
 - **Raft Consensus**: Hashicorp's Raft implementation for distributed consensus
+- **WAL (Write-Ahead Log)**: High-performance Raft storage backend optimized for append-only writes
 - **RocksDB**: LSM-tree storage engine for persistent, high-performance storage
 - **In-Memory Cache**: Fast read access with RocksDB persistence
 - **Async Replication**: Non-blocking write replication for improved throughput
@@ -143,8 +144,10 @@ Command-line options:
 ## Storage
 
 By default, VaultDB uses RocksDB for persistent storage. Data is stored in:
-- `{raft-data-path}/rocksdb/` - RocksDB data files
-- `{raft-data-path}/raft.db` - Raft log and metadata
+- `{raft-data-path}/rocksdb/` - RocksDB data files (business data)
+- `{raft-data-path}/wal/` - Raft Write-Ahead Log (consensus metadata)
+
+VaultDB uses HashiCorp's WAL (Write-Ahead Log) for Raft storage, which is optimized for high-performance append-only writes and efficient log truncation. This provides better performance than BoltDB for write-heavy workloads and solves scalability issues with log deletion and free space tracking.
 
 The in-memory cache provides fast access to frequently accessed keys, while RocksDB ensures durability and efficient storage.
 

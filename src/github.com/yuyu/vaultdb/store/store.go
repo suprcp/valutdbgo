@@ -16,7 +16,7 @@ import (
 	"time"
 
 	"github.com/hashicorp/raft"
-	raftboltdb "github.com/hashicorp/raft-boltdb/v2"
+	raftwal "github.com/hashicorp/raft-wal"
 	"github.com/linxGnu/grocksdb"
 )
 
@@ -62,6 +62,9 @@ type Store struct {
 	db *grocksdb.DB
 	ro *grocksdb.ReadOptions
 	wo *grocksdb.WriteOptions
+
+	// WAL instance for Raft log and stable storage (only used in persistent mode)
+	wal *raftwal.WAL
 
 	raft *raft.Raft // The consensus mechanism
 
@@ -130,14 +133,19 @@ func (s *Store) Open(enableSingle bool, localID string) error {
 		logStore = raft.NewInmemStore()
 		stableStore = raft.NewInmemStore()
 	} else {
-		boltDB, err := raftboltdb.New(raftboltdb.Options{
-			Path: filepath.Join(s.RaftDir, "raft.db"),
-		})
-		if err != nil {
-			return fmt.Errorf("new bbolt store: %s", err)
+		// Use WAL (Write-Ahead Log) for high-performance Raft storage
+		// WAL is optimized for append-only writes and efficient log truncation
+		walDir := filepath.Join(s.RaftDir, "wal")
+		if err := os.MkdirAll(walDir, 0755); err != nil {
+			return fmt.Errorf("create wal directory: %s", err)
 		}
-		logStore = boltDB
-		stableStore = boltDB
+		wal, err := raftwal.Open(walDir)
+		if err != nil {
+			return fmt.Errorf("open wal store: %s", err)
+		}
+		s.wal = wal
+		logStore = wal
+		stableStore = wal
 	}
 
 	// Instantiate the Raft systems.
@@ -457,6 +465,13 @@ func (s *Store) Close() error {
 	// Stop async replication
 	close(s.asyncReplicationStop)
 	s.asyncReplicationWg.Wait()
+
+	// Close WAL if used
+	if s.wal != nil {
+		if err := s.wal.Close(); err != nil {
+			s.logger.Printf("error closing WAL: %v", err)
+		}
+	}
 
 	// Close RocksDB
 	if s.db != nil {

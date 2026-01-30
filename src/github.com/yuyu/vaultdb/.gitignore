@@ -34,6 +34,7 @@ go.work.sum
 bin/
 dist/
 build/
+pkg/
 
 # RocksDB data directories (uncomment if you don't want to commit data)
 # rocksdb/

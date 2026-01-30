@@ -22,6 +22,7 @@ func Test_StoreOpen(t *testing.T) {
 	if err := s.Open(false, "node0"); err != nil {
 		t.Fatalf("failed to open store: %s", err)
 	}
+	defer s.Close()
 }
 
 // Test_StoreOpenSingleNode tests that a command can be applied to the log
@@ -40,6 +41,7 @@ func Test_StoreOpenSingleNode(t *testing.T) {
 	if err := s.Open(true, "node0"); err != nil {
 		t.Fatalf("failed to open store: %s", err)
 	}
+	defer s.Close()
 
 	// Simple way to ensure there is a leader.
 	time.Sleep(3 * time.Second)
@@ -90,6 +92,7 @@ func Test_StoreInMemOpenSingleNode(t *testing.T) {
 	if err := s.Open(true, "node0"); err != nil {
 		t.Fatalf("failed to open store: %s", err)
 	}
+	defer s.Close()
 
 	// Simple way to ensure there is a leader.
 	time.Sleep(3 * time.Second)
@@ -138,6 +141,7 @@ func Test_StoreStatus(t *testing.T) {
 	if err := s.Open(true, "node0"); err != nil {
 		t.Fatalf("failed to open store: %s", err)
 	}
+	defer s.Close()
 
 	// assuming 3 seconds enough for raft to initialized
 	time.Sleep(3 * time.Second)
