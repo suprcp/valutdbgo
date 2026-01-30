@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"strings"
 
-	store "github.com/yuyu/vaultdb/store"
+	store "github.com/suprcp/valutdbgo/store"
 )
 
 // Store is the interface Raft-backed key-value stores must implement.

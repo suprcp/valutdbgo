@@ -46,7 +46,7 @@
 ## Git Commands
 
 ```bash
-cd /Users/yuyu/valutdbgo/src/github.com/yuyu/vaultdb
+cd /Users/yuyu/valutdbgo
 
 # Initialize git (if not already)
 git init
@@ -61,7 +61,7 @@ git status
 git commit -m "Initial commit: VaultDB - High-Performance Distributed Key-Value Store"
 
 # Add remote (replace with your GitHub repo URL)
-git remote add origin https://github.com/yuyu/vaultdb.git
+git remote add origin https://github.com/suprcp/valutdbgo.git
 
 # Push
 git push -u origin main

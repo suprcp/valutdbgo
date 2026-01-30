@@ -10,7 +10,7 @@ import (
 	"strings"
 	"testing"
 
-	store "github.com/yuyu/vaultdb/store"
+	store "github.com/suprcp/valutdbgo/store"
 )
 
 // Test_NewServer tests that a server can perform all basic operations.

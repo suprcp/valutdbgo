@@ -12,8 +12,8 @@ import (
 	"os/signal"
 	"strings"
 
-	httpd "github.com/yuyu/vaultdb/http"
-	"github.com/yuyu/vaultdb/store"
+	httpd "github.com/suprcp/valutdbgo/http"
+	"github.com/suprcp/valutdbgo/store"
 )
 
 // Command line defaults

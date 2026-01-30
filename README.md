@@ -1,7 +1,7 @@
 # VaultDB - High-Performance Distributed Key-Value Store
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/yuyu/vaultdb.svg)](https://pkg.go.dev/github.com/yuyu/vaultdb)
-[![Go Report Card](https://goreportcard.com/badge/github.com/yuyu/vaultdb)](https://goreportcard.com/report/github.com/yuyu/vaultdb)
+[![Go Reference](https://pkg.go.dev/badge/github.com/suprcp/valutdbgo.svg)](https://pkg.go.dev/github.com/suprcp/valutdbgo)
+[![Go Report Card](https://goreportcard.com/badge/github.com/suprcp/valutdbgo)](https://goreportcard.com/report/github.com/suprcp/valutdbgo)
 
 VaultDB is a high-performance distributed key-value storage system built in Go using the Raft consensus protocol. It supports 10K+ operations per second with sub-millisecond latency and strong consistency across multi-node clusters.
 
